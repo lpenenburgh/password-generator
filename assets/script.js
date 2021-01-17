@@ -4,7 +4,6 @@ var lowerCasedLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 
 var upperCasedLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 var numericalCharacters = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 var specialCharacters = [':', ',', ')', '(', '}', '{', ']', '[', '~', '-', '_', '.', '@', '%', '!', '#', '$', '^', '?', '+', '\\', '/', "'"];
-
 //Prompting user for preffered password length
 function getPassInput() {
     //storing the users length preference
@@ -17,7 +16,7 @@ function getPassInput() {
         return;
     }
 
-    if (length > 129) {
+    if (length > 128) {
         alert("Please provide a number less than 129");
         return;
     }
@@ -54,6 +53,7 @@ function getPassInput() {
         hasNumericalCharacters: hasNumericalCharacters,
         hasSpecialCharacters: hasSpecialCharacters
     };
+
     return passwordInput;
 }//end of first function
 
@@ -66,12 +66,12 @@ function pickRandom(arr) {
 //Generating password
 function generatePassword() {
     var userInput = getPassInput();
-    var result = []; 
+    var result = [];
     var potentialCharacters = [];
     var guaranteedCharacters = [];
 
-  //  adding array of each type of character into array of pontential characters  
-  //  Getting a random character and pushing it to the guaranteedCharacter Array
+    //  adding array of each type of character into array of pontential characters  
+    //  Getting a random character and pushing it to the guaranteedCharacter Array
     if (userInput.hasLowerCasedLetters) {
         potentialCharacters = potentialCharacters.concat(lowerCasedLetters);
         guaranteedCharacters.push(pickRandom(lowerCasedLetters));
@@ -91,6 +91,17 @@ function generatePassword() {
         potentialCharacters = potentialCharacters.concat(specialCharacters);
         guaranteedCharacters.push(pickRandom(specialCharacters));
     }
+
+    for (var i = 0; i < userInput.length; i++) {
+        var potentialCharacters = pickRandom(potentialCharacters);
+        result.push(potentialCharacters);
+    }
+
+    for (var i = 0; i < guaranteedCharacters.length; i++) {
+        result[i] = guaranteedCharacters[i];
+    }
+
+    return result.join('');
 }
 
 
@@ -103,6 +114,7 @@ function writePassword() {
     var passwordText = document.querySelector("#password");
 
     passwordText.value = password;
+  
 }
 
 // Add event listener to generate button
