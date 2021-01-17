@@ -40,13 +40,26 @@ function getPassInput() {
 
     var hasSpecialCharacters = confirm(
         "Click OK to include special characters in password."
-    )
-
+    );
+    // Send alert to user if they didnt add any of the previous prompted character
+    if (!hasLowerCasedLetters && !hasUpperCasedLetters && !hasNumericalCharacters && !hasSpecialCharacters) {
+        alert("Please select at least one option.");
+        return;
+    }
+    //Store the users answers
+    var passwordInput = {
+        length: length,
+        hasLowerCasedLetters: hasLowerCasedLetters,
+        hasUpperCasedLetters: hasUpperCasedLetters,
+        hasNumericalCharacters: hasNumericalCharacters,
+        hasSpecialCharacters: hasSpecialCharacters
+    };
+    return passwordInput;
 }
 
 
 
-//Store the users anwers 
+
 
 
 //Generating password
