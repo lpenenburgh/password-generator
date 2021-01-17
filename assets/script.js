@@ -12,7 +12,7 @@ function getPassInput() {
         prompt("How long would you like your password. Please pick between 8 and 129")
     );
     //checking if user entered a valid number and length, if not valid, send an alert    
-    if (isNaN(length) ===true) {
+    if (isNaN(length) === true) {
         alert("Please provide a number");
         return;
     }
@@ -25,7 +25,7 @@ function getPassInput() {
     if (length < 8) {
         alert("Please provide a number larger than 7");
     }
-     //user chooses if they want to include lowercase letters, uppercase letters, numbers & special characters in the password using confirm
+    //user chooses if they want to include lowercase letters, uppercase letters, numbers & special characters in the password using confirm
     var hasLowerCasedLetters = confirm(
         "Click OK to include lowercase letters in password."
     );
@@ -55,14 +55,43 @@ function getPassInput() {
         hasSpecialCharacters: hasSpecialCharacters
     };
     return passwordInput;
+}//end of first function
+
+//Pick random characters from the character arrays to use in the pass
+function pickRandom(arr) {
+    var randomIndex = Math.floor(Math.random() * arr.length);
+    var randomEl = arr[randomIndex];
+    return randomEl;
 }
-
-
-
-
-
-
 //Generating password
+function generatePassword() {
+    var userInput = getPassInput();
+    var result = []; 
+    var potentialCharacters = [];
+    var guaranteedCharacters = [];
+
+  //  adding array of each type of character into array of pontential characters  
+  //  Getting a random character and pushing it to the guaranteedCharacter Array
+    if (userInput.hasLowerCasedLetters) {
+        potentialCharacters = potentialCharacters.concat(lowerCasedLetters);
+        guaranteedCharacters.push(pickRandom(lowerCasedLetters));
+    }
+
+    if (userInput.hasUpperCasedLetters) {
+        potentialCharacters = potentialCharacters.concat(upperCasedLetters);
+        guaranteedCharacters.push(pickRandom(upperCasedLetters));
+    }
+
+    if (userInput.hasNumericalCharacters) {
+        potentialCharacters = potentialCharacters.concat(numericalCharacters);
+        guaranteedCharacters.push(pickRandom(numericalCharacters));
+    }
+
+    if (userInput.hasSpecialCharacters) {
+        potentialCharacters = potentialCharacters.concat(specialCharacters);
+        guaranteedCharacters.push(pickRandom(specialCharacters));
+    }
+}
 
 
 var generateBtn = document.querySelector("#generate");
